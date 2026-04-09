@@ -11,23 +11,23 @@ import { MISSION } from "../data/missionData";
 //     spacecraft goes BEHIND the Moon → max Earth-distance ~393,400 km
 //   • Outbound and return legs track different angles → visible separation
 const TRAJECTORY = [
-  [0.000,    350, 90], // Launch — LEO parking orbit
-  [0.030,   8000, 88], // Post-TLI departure
-  [0.115,  57000, 82], // TLI milestone
-  [0.250, 165000, 72], // Outbound day 2.5
-  [0.380, 295000, 62], // Approaching Moon
-  [0.440, 355000, 55], // Entering lunar sphere of influence
-  [0.460, 376000, 49], // Final inbound leg
+  [0.0, 350, 90], // Launch — LEO parking orbit
+  [0.03, 8000, 88], // Post-TLI departure
+  [0.115, 57000, 82], // TLI milestone
+  [0.25, 165000, 72], // Outbound day 2.5
+  [0.38, 295000, 62], // Approaching Moon
+  [0.44, 355000, 55], // Entering lunar sphere of influence
+  [0.46, 376000, 49], // Final inbound leg
   [0.472, 384400, 44], // ← Moon orbital distance (flyby point)
-  [0.490, 393400, 37], // Far-side arc — behind the Moon
+  [0.49, 393400, 37], // Far-side arc — behind the Moon
   [0.505, 392000, 30], // Continuing far-side arc
-  [0.530, 386000, 22], // Departing Moon influence
-  [0.570, 368000, 16], // Return coast begins
-  [0.650, 330000, 10], // Mid-return day 6.5
-  [0.780, 246000,  5], // JPL-confirmed position (day 8)
-  [0.870, 155000,  2], // Late return
-  [0.940,  45000,  1], // Entry approach
-  [1.000,   6500,  0], // Splashdown
+  [0.53, 386000, 22], // Departing Moon influence
+  [0.57, 368000, 16], // Return coast begins
+  [0.65, 330000, 10], // Mid-return day 6.5
+  [0.78, 246000, 5], // JPL-confirmed position (day 8)
+  [0.87, 155000, 2], // Late return
+  [0.94, 45000, 1], // Entry approach
+  [1.0, 6500, 0], // Splashdown
 ];
 
 const MOON_DIST_KM = 384400;
