@@ -51,11 +51,11 @@ async function fetchTelemetry() {
   // Line 3: LT(hr)  RG(km)  RR(km/s)
   const url =
     "/.netlify/functions/horizons?format=json" +
-    "&COMMAND=%27-1024%27" +     // Artemis II / Orion
+    "&COMMAND=%27-1024%27" + // Artemis II / Orion
     "&OBJ_DATA=%27NO%27" +
     "&MAKE_EPHEM=%27YES%27" +
     "&EPHEM_TYPE=%27VECTORS%27" +
-    "&CENTER=%27500%40399%27" +  // Earth geocenter
+    "&CENTER=%27500%40399%27" + // Earth geocenter
     "&OUT_UNITS=%27KM-S%27" +
     "&VEC_TABLE=%272%27" +
     "&VEC_CORR=%27NONE%27" +
@@ -80,7 +80,8 @@ async function fetchTelemetry() {
   // Debug: log raw block so issues are visible in console
   console.log("[JPL] SOE block (first 4 lines):", lines.slice(0, 4));
 
-  let rangeKm = NaN, rateKmS = NaN;
+  let rangeKm = NaN,
+    rateKmS = NaN;
 
   // Strategy 1 — labeled output (VEC_LABELS=YES): find RG=... anywhere in block
   for (const line of lines) {
