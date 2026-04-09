@@ -1,5 +1,5 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
 
 export default defineConfig({
   plugins: [react()],
@@ -7,12 +7,12 @@ export default defineConfig({
     proxy: {
       // Dev: proxy /.netlify/functions/horizons → JPL Horizons API directly
       // This mirrors what the Netlify Function does in production
-      '/.netlify/functions/horizons': {
-        target: 'https://ssd.jpl.nasa.gov',
+      "/.netlify/functions/horizons": {
+        target: "https://ssd.jpl.nasa.gov",
         changeOrigin: true,
         // Just rewrite the path — Vite preserves the query string automatically
-        rewrite: () => '/api/horizons.api',
+        rewrite: () => "/api/horizons.api",
       },
     },
   },
-})
+});

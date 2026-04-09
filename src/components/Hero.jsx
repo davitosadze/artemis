@@ -1,10 +1,10 @@
-import OrbitCanvas from './OrbitCanvas.jsx';
+import OrbitCanvas from "./OrbitCanvas.jsx";
 
 export default function Hero({ clock, distEarth, speedKmh, distMoon, isLive }) {
   const { metDisplay, phase, orionFraction, simDistEarth, simSpeedKmh } = clock;
 
-  const displayDist  = isLive && distEarth  != null ? distEarth  : simDistEarth;
-  const displaySpeed = isLive && speedKmh   != null ? speedKmh   : simSpeedKmh;
+  const displayDist = isLive && distEarth != null ? distEarth : simDistEarth;
+  const displaySpeed = isLive && speedKmh != null ? speedKmh : simSpeedKmh;
 
   return (
     <section className="hero-section container">
@@ -13,7 +13,11 @@ export default function Hero({ clock, distEarth, speedKmh, distMoon, isLive }) {
         <div className="orbit-viz-wrapper hud">
           <OrbitCanvas
             orionFraction={orionFraction}
-            telemetry={{ distEarth: displayDist, speedKmh: displaySpeed, isLive }}
+            telemetry={{
+              distEarth: displayDist,
+              speedKmh: displaySpeed,
+              isLive,
+            }}
           />
         </div>
 
@@ -28,27 +32,37 @@ export default function Hero({ clock, distEarth, speedKmh, distMoon, isLive }) {
           {/* Current phase */}
           <div className="phase-block hud">
             <div className="phase-label">CURRENT PHASE</div>
-            <div className="phase-value">{phase?.name || '—'}</div>
-            <div className="phase-desc">{phase?.desc || ''}</div>
+            <div className="phase-value">{phase?.name || "—"}</div>
+            <div className="phase-desc">{phase?.desc || ""}</div>
           </div>
 
           {/* Quick stats */}
           <div className="quick-stats">
             <StatMini
               label="DIST EARTH"
-              value={displayDist != null ? Math.round(displayDist).toLocaleString() : '—'}
+              value={
+                displayDist != null
+                  ? Math.round(displayDist).toLocaleString()
+                  : "—"
+              }
               unit="km"
               color="var(--cyan)"
             />
             <StatMini
               label="VELOCITY"
-              value={displaySpeed != null ? Math.round(displaySpeed).toLocaleString() : '—'}
+              value={
+                displaySpeed != null
+                  ? Math.round(displaySpeed).toLocaleString()
+                  : "—"
+              }
               unit="km/h"
               color="var(--amber)"
             />
             <StatMini
               label="DIST MOON"
-              value={distMoon != null ? Math.round(distMoon).toLocaleString() : '—'}
+              value={
+                distMoon != null ? Math.round(distMoon).toLocaleString() : "—"
+              }
               unit="km"
               color="rgba(180,170,160,0.8)"
             />
@@ -63,7 +77,9 @@ function StatMini({ label, value, unit, color }) {
   return (
     <div className="stat-mini hud">
       <div className="stat-mini-label">{label}</div>
-      <div className="stat-mini-value" style={{ color }}>{value}</div>
+      <div className="stat-mini-value" style={{ color }}>
+        {value}
+      </div>
       <div className="stat-mini-unit">{unit}</div>
     </div>
   );

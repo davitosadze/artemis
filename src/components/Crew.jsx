@@ -1,4 +1,4 @@
-import { CREW } from '../data/missionData';
+import { CREW } from "../data/missionData";
 
 export default function Crew() {
   return (
@@ -10,8 +10,9 @@ export default function Crew() {
             <div key={i} className="crew-card">
               <div
                 className="crew-avatar"
-                style={{ background: `linear-gradient(135deg, ${c.color1}, ${c.color2})` }}
-              >
+                style={{
+                  background: `linear-gradient(135deg, ${c.color1}, ${c.color2})`,
+                }}>
                 <span>{c.initials}</span>
               </div>
               <div className="crew-name">{c.name}</div>
