@@ -1,75 +1,135 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- ── PRIMARY SEO ─────────────────────────────────────────── -->
-  <title>Artemis II Live Tracker — Real-Time NASA Telemetry, Speed & Splashdown Countdown</title>
-  <meta name="description" content="Track NASA's Artemis II Orion spacecraft live. Real-time distance from Earth, spacecraft speed, mission elapsed time, splashdown countdown, full crew info and mission timeline — powered by official JPL Horizons telemetry data." />
-  <meta name="keywords" content="Artemis II live tracker, NASA Artemis 2 tracker, Orion spacecraft live, moon mission tracker, NASA real-time telemetry, splashdown countdown 2026, Reid Wiseman, Victor Glover, Christina Koch, Jeremy Hansen, JPL Horizons API, Artemis live mission, space mission tracker, NASA live, Orion EM-2, Integrity spacecraft" />
-  <meta name="author" content="Artemis II Live Tracker" />
-  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-  <link rel="canonical" href="https://artemislivetrack.netlify.app/" />
+    <!-- ── PRIMARY SEO ─────────────────────────────────────────── -->
+    <title>
+      Artemis II Live Tracker — Real-Time NASA Telemetry, Speed & Splashdown
+      Countdown
+    </title>
+    <meta
+      name="description"
+      content="Track NASA's Artemis II Orion spacecraft live. Real-time distance from Earth, spacecraft speed, mission elapsed time, splashdown countdown, full crew info and mission timeline — powered by official JPL Horizons telemetry data." />
+    <meta
+      name="keywords"
+      content="Artemis II live tracker, NASA Artemis 2 tracker, Orion spacecraft live, moon mission tracker, NASA real-time telemetry, splashdown countdown 2026, Reid Wiseman, Victor Glover, Christina Koch, Jeremy Hansen, JPL Horizons API, Artemis live mission, space mission tracker, NASA live, Orion EM-2, Integrity spacecraft" />
+    <meta name="author" content="Artemis II Live Tracker" />
+    <meta
+      name="robots"
+      content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <link rel="canonical" href="https://artemislivetrack.netlify.app/" />
 
-  <!-- ── OPEN GRAPH (Facebook / LinkedIn) ───────────────────── -->
-  <meta property="og:type" content="website" />
-  <meta property="og:site_name" content="Artemis II Live Tracker" />
-  <meta property="og:url" content="https://artemislivetrack.netlify.app/" />
-  <meta property="og:title" content="Artemis II Live Mission Tracker — Real-Time NASA Telemetry" />
-  <meta property="og:description" content="Follow NASA's Artemis II crew live. Real-time spacecraft speed, distance from Earth, mission elapsed time, and splashdown countdown powered by JPL Horizons." />
-  <meta property="og:image" content="https://artemislivetrack.netlify.app/og-image.jpg" />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="Artemis II orbit visualization with live telemetry readouts" />
-  <meta property="og:locale" content="en_US" />
+    <!-- ── OPEN GRAPH (Facebook / LinkedIn) ───────────────────── -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Artemis II Live Tracker" />
+    <meta property="og:url" content="https://artemislivetrack.netlify.app/" />
+    <meta
+      property="og:title"
+      content="Artemis II Live Mission Tracker — Real-Time NASA Telemetry" />
+    <meta
+      property="og:description"
+      content="Follow NASA's Artemis II crew live. Real-time spacecraft speed, distance from Earth, mission elapsed time, and splashdown countdown powered by JPL Horizons." />
+    <meta
+      property="og:image"
+      content="https://artemislivetrack.netlify.app/og-image.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="Artemis II orbit visualization with live telemetry readouts" />
+    <meta property="og:locale" content="en_US" />
 
-  <!-- ── TWITTER CARD ────────────────────────────────────────── -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:site" content="@NASA" />
-  <meta name="twitter:title" content="Artemis II Live Mission Tracker" />
-  <meta name="twitter:description" content="Real-time speed, distance from Earth, and splashdown countdown for NASA's Artemis II Orion spacecraft. Powered by JPL Horizons." />
-  <meta name="twitter:image" content="https://artemislivetrack.netlify.app/og-image.jpg" />
-  <meta name="twitter:image:alt" content="Artemis II live mission tracker interface" />
+    <!-- ── TWITTER CARD ────────────────────────────────────────── -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@NASA" />
+    <meta name="twitter:title" content="Artemis II Live Mission Tracker" />
+    <meta
+      name="twitter:description"
+      content="Real-time speed, distance from Earth, and splashdown countdown for NASA's Artemis II Orion spacecraft. Powered by JPL Horizons." />
+    <meta
+      name="twitter:image"
+      content="https://artemislivetrack.netlify.app/og-image.jpg" />
+    <meta
+      name="twitter:image:alt"
+      content="Artemis II live mission tracker interface" />
 
-  <!-- ── JSON-LD STRUCTURED DATA ────────────────────────────── -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "Artemis II Live Mission Tracker",
-    "url": "https://artemislivetrack.netlify.app/",
-    "description": "Real-time telemetry tracker for NASA's Artemis II Orion spacecraft. Live distance, speed, splashdown countdown and mission timeline.",
-    "about": {
-      "@type": "Event",
-      "name": "NASA Artemis II Mission",
-      "startDate": "2026-04-01",
-      "endDate": "2026-04-11",
-      "location": { "@type": "Place", "name": "Earth–Moon Space" },
-      "organizer": { "@type": "Organization", "name": "NASA", "url": "https://www.nasa.gov" },
-      "performer": [
-        { "@type": "Person", "name": "Reid Wiseman", "jobTitle": "Commander" },
-        { "@type": "Person", "name": "Victor Glover", "jobTitle": "Pilot" },
-        { "@type": "Person", "name": "Christina Koch", "jobTitle": "Mission Specialist" },
-        { "@type": "Person", "name": "Jeremy Hansen", "jobTitle": "Mission Specialist" }
-      ]
-    }
-  }
-  </script>
+    <!-- ── JSON-LD STRUCTURED DATA ────────────────────────────── -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Artemis II Live Mission Tracker",
+        "url": "https://artemislivetrack.netlify.app/",
+        "description": "Real-time telemetry tracker for NASA's Artemis II Orion spacecraft. Live distance, speed, splashdown countdown and mission timeline.",
+        "about": {
+          "@type": "Event",
+          "name": "NASA Artemis II Mission",
+          "startDate": "2026-04-01",
+          "endDate": "2026-04-11",
+          "location": { "@type": "Place", "name": "Earth–Moon Space" },
+          "organizer": {
+            "@type": "Organization",
+            "name": "NASA",
+            "url": "https://www.nasa.gov"
+          },
+          "performer": [
+            {
+              "@type": "Person",
+              "name": "Reid Wiseman",
+              "jobTitle": "Commander"
+            },
+            { "@type": "Person", "name": "Victor Glover", "jobTitle": "Pilot" },
+            {
+              "@type": "Person",
+              "name": "Christina Koch",
+              "jobTitle": "Mission Specialist"
+            },
+            {
+              "@type": "Person",
+              "name": "Jeremy Hansen",
+              "jobTitle": "Mission Specialist"
+            }
+          ]
+        }
+      }
+    </script>
 
-  <!-- ── THEME ───────────────────────────────────────────────── -->
-  <meta name="theme-color" content="#03040a" />
-  <meta name="color-scheme" content="dark" />
+    <!-- ── GOOGLE ANALYTICS GA4 ─────────────────────────────────
+       Replace G-XXXXXXXXXX with your Measurement ID from
+       https://analytics.google.com
+  ──────────────────────────────────────────────────────────── -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-4WWLMQT8NH"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-4WWLMQT8NH", {
+        page_title: "Artemis II Live Tracker",
+        send_page_view: true,
+      });
+    </script>
 
-  <!-- ── FONTS ──────────────────────────────────────────────── -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-  <script type="module" crossorigin src="/assets/index-BQPQSs99.js"></script>
-  <link rel="stylesheet" crossorigin href="/assets/index-C-DjkyR3.css">
-</head>
-<body>
-  <div id="root"></div>
-</body>
+    <!-- ── THEME ───────────────────────────────────────────────── -->
+    <meta name="theme-color" content="#03040a" />
+    <meta name="color-scheme" content="dark" />
+
+    <!-- ── FONTS ──────────────────────────────────────────────── -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet" />
+    <script type="module" crossorigin src="/assets/index-LzdIgVeZ.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-ByBg7XnQ.css">
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
 </html>
