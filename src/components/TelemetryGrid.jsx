@@ -25,8 +25,10 @@ export default function TelemetryGrid({
   simDistMoon,
   isLive,
 }) {
-  const dE = isLive && distEarth != null ? distEarth : simDistEarth;
-  const vKmh = isLive && speedKmh != null ? speedKmh : simSpeedKmh;
+  // Always use sim values so numbers tick every second.
+  // isLive / distEarth / speedKmh are only used for the status badge.
+  const dE = simDistEarth;
+  const vKmh = simSpeedKmh;
   const dM = simDistMoon;
   const delay = signalDelaySec(dE);
   const mach = machNumber(vKmh);
