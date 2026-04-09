@@ -9,7 +9,7 @@ exports.handler = async (event) => {
     const response = await fetch(jplUrl, {
       headers: {
         "User-Agent":
-          "ArtemisIILiveTracker/1.0 (https://artemislivetrack.netlify.app)",
+          "ArtemisIILiveTracker/1.0 (https://artemistracker.online)",
       },
       signal: AbortSignal.timeout(15000),
     });
