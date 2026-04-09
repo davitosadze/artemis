@@ -3,9 +3,9 @@ import OrbitCanvas from "./OrbitCanvas.jsx";
 export default function Hero({ clock, distEarth, speedKmh, distMoon, isLive }) {
   const { metDisplay, phase, orionFraction, simDistEarth, simSpeedKmh } = clock;
 
-  // Always tick from sim so numbers update every second
-  const displayDist = simDistEarth;
-  const displaySpeed = simSpeedKmh;
+  // Use JPL live values (dead-reckoned, ticks every second) when available
+  const displayDist = isLive && distEarth != null ? distEarth : simDistEarth;
+  const displaySpeed = isLive && speedKmh != null ? speedKmh : simSpeedKmh;
 
   return (
     <section className="hero-section container">

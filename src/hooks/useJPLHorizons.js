@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
+import { MISSION } from "../data/missionData";
 
 const MONTHS = [
   "Jan",
@@ -126,13 +127,15 @@ async function fetchTelemetry() {
 }
 
 export default function useJPLHorizons() {
-  const [jpl, setJpl] = useState(null);
+  // snapshot = { distEarth, speedKmh, fetchedAt }
+  const [snapshot, setSnapshot] = useState(null);
   const [isLive, setIsLive] = useState(false);
+  const [now, setNow] = useState(() => Date.now());
 
   const doFetch = useCallback(async () => {
     try {
       const result = await fetchTelemetry();
-      setJpl(result);
+      setSnapshot({ ...result, fetchedAt: Date.now() });
       setIsLive(true);
       console.log(
         `[JPL] ✓ ${result.distEarth.toLocaleString()} km · ${result.speedKmh.toLocaleString()} km/h`,
@@ -143,15 +146,38 @@ export default function useJPLHorizons() {
     }
   }, []);
 
+  // Fetch on mount, refresh every 60 s
   useEffect(() => {
     doFetch();
     const id = setInterval(doFetch, 60000);
     return () => clearInterval(id);
   }, [doFetch]);
 
-  return {
-    distEarth: jpl ? jpl.distEarth : null,
-    speedKmh: jpl ? jpl.speedKmh : null,
-    isLive,
-  };
+  // Tick every second so dead-reckoned values update smoothly
+  useEffect(() => {
+    const id = setInterval(() => setNow(Date.now()), 1000);
+    return () => clearInterval(id);
+  }, []);
+
+  if (!snapshot || !isLive) {
+    return { distEarth: null, speedKmh: null, isLive: false };
+  }
+
+  // Dead-reckon: advance distance from the snapshot using known speed.
+  // Past the lunar flyby (frac > 0.472) the spacecraft is returning → dist decreasing.
+  const missionDuration =
+    MISSION.splashdownTime.getTime() - MISSION.launchTime.getTime();
+  const fracAtFetch =
+    (snapshot.fetchedAt - MISSION.launchTime.getTime()) / missionDuration;
+  const returning = fracAtFetch > 0.472;
+
+  const elapsedH = (now - snapshot.fetchedAt) / 3_600_000;
+  const distEarth = Math.max(
+    6371,
+    Math.round(
+      snapshot.distEarth + (returning ? -1 : 1) * snapshot.speedKmh * elapsedH,
+    ),
+  );
+
+  return { distEarth, speedKmh: snapshot.speedKmh, isLive: true };
 }
