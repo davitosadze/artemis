@@ -82,8 +82,12 @@ async function fetchTelemetry() {
 
   // VEC_TABLE=2 gives: line0=epoch, line1="X=... Y=... Z=...", line2="VX=... VY=... VZ=..."
   // Compute range = sqrt(X²+Y²+Z²), speed = sqrt(VX²+VY²+VZ²)
-  let X = NaN, Y = NaN, Z = NaN;
-  let VX = NaN, VY = NaN, VZ = NaN;
+  let X = NaN,
+    Y = NaN,
+    Z = NaN;
+  let VX = NaN,
+    VY = NaN,
+    VZ = NaN;
   const NUM = /[-+]?[\d.]+(?:[Ee][+-]?\d+)?/;
 
   for (const line of lines) {
