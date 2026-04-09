@@ -17,36 +17,43 @@ function getCurrentPhase(nowMs) {
 }
 
 // Mirrors the TRAJECTORY waypoints in OrbitCanvas — [missionFraction, distFromEarth_km]
+// Calibrated: day 8 (frac 0.780) = 246,000 km confirmed by JPL Horizons
 const TRAJ_DIST = [
-  [0.0, 0],
-  [0.03, 8000],
-  [0.12, 55000],
-  [0.28, 185000],
-  [0.45, 345000],
-  [0.5, 384400],
-  [0.54, 390000],
-  [0.64, 395000],
-  [0.72, 358000],
-  [0.8, 268000],
-  [0.87, 170000],
-  [0.945, 48000],
-  [1.0, 6500],
+  [0.000,    350],
+  [0.030,   8000],
+  [0.115,  57000],
+  [0.250, 165000],
+  [0.380, 295000],
+  [0.440, 355000],
+  [0.460, 376000],
+  [0.472, 384400], // Moon flyby
+  [0.490, 393400], // Far-side maximum
+  [0.505, 392000],
+  [0.530, 386000],
+  [0.570, 368000],
+  [0.650, 330000],
+  [0.780, 246000], // JPL confirmed
+  [0.870, 155000],
+  [0.940,  45000],
+  [1.000,   6500],
 ];
 
-// Approximate spacecraft speed at each trajectory fraction (km/h)
+// Physics-based speeds (km/h) via vis-viva: v²=GM·(2/r−1/a)
+// Semi-major axis a≈227,400 km derived from JPL day-8 observation
+// Calibrated anchor: frac 0.780 = 4,384 km/h (JPL confirmed)
 const TRAJ_SPEED = [
-  [0.0, 36000],
-  [0.12, 10500],
-  [0.28, 5200],
-  [0.45, 3900],
-  [0.5, 3700],
-  [0.54, 3900],
-  [0.64, 5000],
-  [0.72, 7500],
-  [0.8, 11000],
-  [0.87, 17000],
-  [0.945, 30000],
-  [1.0, 40000],
+  [0.000, 39000], // TLI burn (~10.8 km/s)
+  [0.030, 35500], // r=8,000 km
+  [0.115, 12500], // r=57,000 km
+  [0.250,  6300], // r=165,000 km
+  [0.380,  3500], // r=295,000 km
+  [0.472,  2050], // r=384,400 km (Moon flyby)
+  [0.505,  1890], // r=392,000 km (near apoapsis — minimum speed)
+  [0.650,  3100], // r=330,000 km
+  [0.780,  4384], // r=246,000 km — JPL confirmed
+  [0.870,  6600], // r=155,000 km
+  [0.940, 14000], // r=45,000 km
+  [1.000, 39500], // Entry/splashdown (~11 km/s)
 ];
 
 function trajInterp(table, frac) {
