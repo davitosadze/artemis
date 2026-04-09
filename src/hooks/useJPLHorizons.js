@@ -80,56 +80,44 @@ async function fetchTelemetry() {
   // Debug: log raw block so issues are visible in console
   console.log("[JPL] SOE block (first 4 lines):", lines.slice(0, 4));
 
-  let rangeKm = NaN,
-    rateKmS = NaN;
+  // VEC_TABLE=2 gives: line0=epoch, line1="X=... Y=... Z=...", line2="VX=... VY=... VZ=..."
+  // Compute range = sqrt(X²+Y²+Z²), speed = sqrt(VX²+VY²+VZ²)
+  let X = NaN, Y = NaN, Z = NaN;
+  let VX = NaN, VY = NaN, VZ = NaN;
+  const NUM = /[-+]?[\d.]+(?:[Ee][+-]?\d+)?/;
 
-  // Strategy 1 — labeled output (VEC_LABELS=YES): find RG=... anywhere in block
   for (const line of lines) {
-    if (isNaN(rangeKm)) {
-      const m = line.match(/\bRG\s*=\s*([-+]?[\d.]+(?:[Ee][+-]?\d+)?)/);
-      if (m) rangeKm = parseFloat(m[1]);
-    }
-    if (isNaN(rateKmS)) {
-      const m = line.match(/\bRR\s*=\s*([-+]?[\d.]+(?:[Ee][+-]?\d+)?)/);
-      if (m) rateKmS = parseFloat(m[1]);
-    }
-    if (!isNaN(rangeKm) && !isNaN(rateKmS)) break;
-  }
-
-  // Strategy 2 — unlabeled VEC_TABLE=2: line index 3 = "LT  RG  RR"
-  if (isNaN(rangeKm) && lines.length >= 4) {
-    const parts = lines[3].trim().split(/\s+/);
-    if (parts.length === 3) {
-      rangeKm = parseFloat(parts[1]);
-      rateKmS = parseFloat(parts[2]);
-    }
-  }
-
-  // Strategy 3 — scan for any line that is exactly 3 numbers (LT/RG/RR)
-  if (isNaN(rangeKm)) {
-    for (const line of lines) {
-      const parts = line.trim().split(/\s+/);
-      if (
-        parts.length === 3 &&
-        parts.every((p) => /^[-+]?[\d.]+([Ee][+-]?\d+)?$/.test(p))
-      ) {
-        const candidate = parseFloat(parts[1]);
-        if (candidate > 1000 && candidate < 500000) {
-          rangeKm = candidate;
-          rateKmS = parseFloat(parts[2]);
-          break;
-        }
+    if (isNaN(X)) {
+      const mX = line.match(new RegExp(`\\bX\\s*=\\s*(${NUM.source})`));
+      const mY = line.match(new RegExp(`\\bY\\s*=\\s*(${NUM.source})`));
+      const mZ = line.match(new RegExp(`\\bZ\\s*=\\s*(${NUM.source})`));
+      if (mX && mY && mZ) {
+        X = parseFloat(mX[1]);
+        Y = parseFloat(mY[1]);
+        Z = parseFloat(mZ[1]);
       }
     }
+    if (isNaN(VX)) {
+      const mVX = line.match(new RegExp(`\\bVX\\s*=\\s*(${NUM.source})`));
+      const mVY = line.match(new RegExp(`\\bVY\\s*=\\s*(${NUM.source})`));
+      const mVZ = line.match(new RegExp(`\\bVZ\\s*=\\s*(${NUM.source})`));
+      if (mVX && mVY && mVZ) {
+        VX = parseFloat(mVX[1]);
+        VY = parseFloat(mVY[1]);
+        VZ = parseFloat(mVZ[1]);
+      }
+    }
+    if (!isNaN(X) && !isNaN(VX)) break;
   }
 
-  if (isNaN(rangeKm) || rangeKm <= 0 || rangeKm > 500000) {
+  if (isNaN(X) || isNaN(VX)) {
     throw new Error(
-      `Could not parse RG (got: ${rangeKm}). Check console for raw block.`,
+      `Could not parse X/Y/Z or VX/VY/VZ from VECTORS block. Check console for raw block.`,
     );
   }
 
-  const speedKmh = Math.abs(rateKmS) * 3600;
+  const rangeKm = Math.sqrt(X * X + Y * Y + Z * Z);
+  const speedKmh = Math.sqrt(VX * VX + VY * VY + VZ * VZ) * 3600;
   return { distEarth: Math.round(rangeKm), speedKmh: Math.round(speedKmh) };
 }
 
