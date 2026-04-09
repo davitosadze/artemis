@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://artemis2tracker.netlify.app/sitemap.xml
